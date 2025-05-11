@@ -8,6 +8,13 @@ class Todo {
   }
 }
 
+class Project {
+  constructor(name) {
+    this.id = crypto.randomUUID()
+    this.name = name;
+  }
+}
+
 class CreateTodo {
   constructor() {
     this.storageDb = [];
@@ -16,7 +23,13 @@ class CreateTodo {
   addTodoList(todo) {
     this.storageDb.push(todo);
   }
+
+  debug() {
+    return this.storageDb;
+  }
 }
 
+const instanceCreate = new CreateTodo();
 
-export { Todo, CreateTodo }
+
+export { instanceCreate, Project}

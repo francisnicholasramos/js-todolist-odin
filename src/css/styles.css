@@ -42,15 +42,30 @@ body {
 
 ul {
   /* border: 1px solid black; */
-  margin: 0 5px 0 5px;
+  margin: 0;
   list-style-type: none;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0 5px 10px;
+}
+
+li:hover {
+  background-color: #dfe2e6;
+}
+
+img {
+  width: 35px;
 }
 
 .content {
   padding: 10px;
   width: 100%;
   max-width: 100%;
-  border: 1px solid #dedede;
+  /*border: 1px solid #dedede;*/
 }
 
 
