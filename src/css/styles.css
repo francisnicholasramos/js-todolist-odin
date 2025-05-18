@@ -21,7 +21,7 @@ button {
 
 body {
   height: 100vh;
-  /* overflow-y: hidden; */
+  overflow-y: hidden;
 }
 
 .header {
@@ -46,7 +46,28 @@ body {
   padding: 10px 0 10px 0;
 }
 
+.add-section {
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px 0 15px;
+}
+
+.project-form {
+  display: flex;
+  gap: 5px;
+  margin: 7px 0 0 0;
+}
+
 .addInput {
+  display: none;
+  padding: 0 0 0 5px;
+}
+
+.add-project, .submit:hover {
+  cursor: pointer;
+}
+
+.submit {
   display: none;
 }
 
@@ -56,11 +77,27 @@ ul {
   list-style-type: none;
 }
 
-li {
+.projects, li {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 5px 0 5px 10px;
+}
+
+.projects:hover {
+  background-color: #dfe2e6;
+}
+
+.projectbar {
+  color: #fff;
+  background-color: lightblue;
+  border-radius: 4px;
+  padding: 10px 0 10px 20px;
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: 400;
 }
 
 li:hover {
