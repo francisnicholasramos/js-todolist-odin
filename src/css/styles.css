@@ -89,6 +89,7 @@ ul {
 }
 
 .projectbar {
+  display: block;
   color: #fff;
   background-color: lightblue;
   border-radius: 4px;
