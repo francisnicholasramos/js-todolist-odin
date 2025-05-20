@@ -36,14 +36,51 @@
 
     </div> 
     <div class="content">
-      <!-- <div class="projectbar"> -->
-      <!--   <h2></h2> -->
-      <!-- </div> -->
+      <div class="projectbar" style="display: none;">
+        <h2 class="titleName" style="display: none;"></h2>
+      </div>
+
+      <br>
 
       <!-- content here -->
-      <div class="todos">
+      <div class="todos" style="display: none;">
+        <div class="div1">
+          <input type="checkbox" class="checkbox">
+          <span>task 1</span>
+        </div>
 
+        <div class="div2">
+          <input type="date">
+          <button>&#x2716;</button>
+        </div>
       </div>
+
+      <br>
+      <form action="#" class="taskForm" style="display: none;">
+        <input type="text" placeholder="Task" id="task">
+        <input
+          placeholder="Due date(optional)"
+          class="textbox-n"
+          type="text"
+          onfocus="(this.type='date')"
+          onblur="(this.type='text')"
+          id="date" />
+        <select id="option">
+          <option value="low">Low</option>
+          <option value="priority">Priority</option>
+          <option value="important">Important</option>
+        </select>
+
+        <div class="buttons">
+          <button type="submit" class="add">Add</button>
+          <button class="cancel">Cancel</button>
+        </div>
+
+        <br>
+      </form>
+
+      <button class="addTodo" style="display: none;"><b>+</b> Add Task</button>
+      
 
         
     </div> 

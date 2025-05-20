@@ -22,6 +22,7 @@ button {
 body {
   height: 100vh;
   overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .header {
@@ -59,8 +60,7 @@ body {
 }
 
 .addInput {
-  display: none;
-  padding: 0 0 0 5px;
+  display: none; 
 }
 
 .add-project, .submit:hover {
@@ -89,7 +89,8 @@ ul {
 }
 
 .projectbar {
-  display: block;
+  display: flex;
+  width: 100%;
   color: #fff;
   background-color: lightblue;
   border-radius: 4px;
@@ -109,9 +110,92 @@ img {
   width: 35px;
 }
 
+.addTodo {
+  width: 100%;
+  color: #333;
+  padding: 5px;
+  background-color: transparent;
+  border: hidden;
+  background-color: #f3f3f3;
+  font-size: 1rem;
+}
+
+.addTodo:hover {
+  cursor: pointer;
+  background-color: #cccccc;
+}
+
+.todos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #cccccc;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.div1 {
+  display: flex;
+  gap: 1rem;
+  padding-left: 10px;
+  font-size: 1rem;
+}
+
+.div2 {
+  display: flex;
+  padding-right: 10px;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.checkbox {
+  width: 1.5rem;
+  border-radius: 100%;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 .content {
   padding: 10px;
   width: 100%;
   max-width: 100%;
   /*border: 1px solid #dedede;*/
+}
+
+.taskForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.due {
+  color: #4d4d4d;
+}
+
+input, select {
+  padding: 0 0 0 5px;
+  border: 1px solid #cccccc;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add, .cancel {
+  border: hidden;
+  padding: 5px; 
+  color: #fff;
+  border-radius: 4px;
+}
+
+.add {
+  background-color: #619d7b;
+}
+
+.cancel {
+  background-color: #d4656e;
 }

@@ -1,41 +1,26 @@
 import Project from "./Project";
+import Todo from "./todo";
 import CreateTodo from "./core";
 
-export function renderTodos() {
-  const retrieveProjects = CreateTodo.init().storageDb;
-
-  retrieveProjects.forEach(project => {
-    const container = document.querySelector('.content')
-
-    // light blue navbar
-    const projectbar = document.createElement('div');
-    projectbar.classList.add('projectbar')
-
-    // title of project
-    const h2 = document.createElement('h2')
-    h2.textContent = `${project.name}`;
-
-    // append navbar
-    projectbar.appendChild(h2);
-    container.appendChild(projectbar)
-  })
-} 
-
-
-
-export function test() {
+export function renderProjects() {
   document.querySelectorAll('.projects').forEach(project => {
-    const projectbar = document.querySelector('.projectbar')
+const projectbar = document.querySelector('.projectbar')
+    const h2 = document.querySelector('.titleName')
+    const todos = document.querySelector('.todos')
+    const addTodo = document.querySelector('.addTodo')
     project.addEventListener('click', () => {
       const retrieveProjects = CreateTodo.init().storageDb;
-      const hidden = projectbar.style.display === 'block';
-      projectbar.style.display = hidden ? 'block' : 'none';
+
+      projectbar.style.display = 'block';
+      h2.style.display = 'block';
+      todos.style.display = 'flex';
+      addTodo.style.display = 'block';
 
       const uniqueID = project.id; // get the id 
       const currentProject = retrieveProjects.find(p => p.id === uniqueID)
 
       if (currentProject) {
-        projectbar.textContent = currentProject.name
+        h2.textContent = currentProject.name
       }
     })
   })
@@ -71,6 +56,42 @@ export function addNewProject() {
     listAllProjects(); // re-render the dom for new added array
     form.reset(); // empty form for new entry
   })
+}
+
+export function getTheInputs() {
+  const task = document.querySelector('#task').value
+  const date = document.querySelector('#date').value
+  const option = document.querySelector('#option').value
+
+  return {
+    task,
+    date,
+    option
+  }
+}
+
+// addNewTask
+export function addNewTask(value) {
+  const insertNew = new Project();
+
+  const newTodo = new Todo(value.task, value.date, value.option)
+
+  const newTaskForm = document.querySelector('.taskForm')
+  const addBtn = document.querySelector('.addTodo')
+  const cancelBtn = document.querySelector('.cancel')
+  addBtn.addEventListener('click', () => {
+    const hideForm = newTaskForm.style.display === 'none'
+    newTaskForm.style.display = hideForm ? 'flex' : 'none';
+  })
+  cancelBtn.addEventListener('click', () => {
+    const hideForm = newTaskForm.style.display === 'none'
+    newTaskForm.style.display = hideForm ? 'flex' : 'none';
+  })
+
+
+  insertNew.addTodo(newTodo)
+  localStorage.setItem('test', JSON.stringify(insertNew))
+
 }
 
 // listAllProjects

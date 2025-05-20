@@ -1,7 +1,6 @@
 class Todo {
-  constructor(title, description, dueDate, priority) {
-    this.title = title;
-    this.description = description;
+  constructor(task, dueDate, priority) {
+    this.task = task;
     this.dueDate = dueDate;
     this.priority = priority;
     this.status = false;

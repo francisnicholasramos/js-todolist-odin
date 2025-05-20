@@ -17,5 +17,12 @@ export default class Project {
     console.log('delete')
   }
 
+  todoStorage() {
+    return this.todos;
+  }
+
 }
+
+// create a function that will take the inputs and will pass the
+// parameter later in addTodo() method
 
