@@ -17,6 +17,7 @@ export default class CreateTodo {
       instance.storageDb = projects.map(item => {
         const project = new Project(item.name);
         project.id = item.id;
+        project.todos = item.todos;
         return project;
       })
       return instance; // for return saved data 
@@ -32,8 +33,6 @@ export default class CreateTodo {
   store() {
     localStorage.setItem('project', JSON.stringify(this));
   }
-
-
 }
 
 

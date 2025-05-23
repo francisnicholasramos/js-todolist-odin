@@ -4,7 +4,7 @@ import CreateTodo from "./core";
 
 export function renderProjects() {
   document.querySelectorAll('.projects').forEach(project => {
-const projectbar = document.querySelector('.projectbar')
+    const projectbar = document.querySelector('.projectbar')
     const h2 = document.querySelector('.titleName')
     const todos = document.querySelector('.todos')
     const addTodo = document.querySelector('.addTodo')
@@ -13,7 +13,7 @@ const projectbar = document.querySelector('.projectbar')
 
       projectbar.style.display = 'block';
       h2.style.display = 'block';
-      todos.style.display = 'flex';
+      // todos.style.display = 'flex'
       addTodo.style.display = 'block';
 
       const uniqueID = project.id; // get the id 
@@ -37,7 +37,7 @@ export function openForm() {
     input.style.display = hide ? 'block' : 'none';
     submit.style.display = hide ? 'block' : 'none';
   })
-} 
+}
 
 // addNewProject
 export function addNewProject() {
@@ -58,68 +58,80 @@ export function addNewProject() {
   })
 }
 
+// getTheInputs
 export function getTheInputs() {
   const task = document.querySelector('#task').value
   const date = document.querySelector('#date').value
   const option = document.querySelector('#option').value
 
+
+  const activeProject = document.querySelector('.projects');
+  const uid = activeProject ? activeProject.id : null;
+
   return {
     task,
     date,
-    option
+    option,
+    uid
   }
 }
 
 // addNewTask
 export function addNewTask(value) {
-  const insertNew = new Project();
-
   const newTodo = new Todo(value.task, value.date, value.option)
 
   const newTaskForm = document.querySelector('.taskForm')
   const addBtn = document.querySelector('.addTodo')
   const cancelBtn = document.querySelector('.cancel')
+
   addBtn.addEventListener('click', () => {
     const hideForm = newTaskForm.style.display === 'none'
     newTaskForm.style.display = hideForm ? 'flex' : 'none';
   })
+
   cancelBtn.addEventListener('click', () => {
     const hideForm = newTaskForm.style.display === 'none'
     newTaskForm.style.display = hideForm ? 'flex' : 'none';
   })
 
+  newTaskForm.addEventListener('submit', () => {
+    const savedWrapper = JSON.parse(localStorage.getItem('project'));
+    const savedProjects = savedWrapper?.storageDb || [];
 
-  insertNew.addTodo(newTodo)
-  localStorage.setItem('test', JSON.stringify(insertNew))
+    const targetProject = savedProjects.find(p => p.id === value.uid);
+    
+    if (targetProject) {
+      targetProject.todos.push(newTodo);
+      localStorage.setItem('project', JSON.stringify({storageDb: savedProjects}));
+    }
+  })
 
 }
 
 // listAllProjects
 export function listAllProjects() {
-  const arr = CreateTodo.init().storageDb;
   const projectsLists = document.querySelector('.project-lists')
   projectsLists.innerHTML = ''
 
-    const data = JSON.parse(localStorage.getItem('project'))
-    const projects = data.storageDb ?? [];
+  const data = JSON.parse(localStorage.getItem('project'))
+  const projects = data.storageDb ?? [];
 
-    projects.forEach(item => {
-      const element = document.createElement('div')
-      const img = document.createElement('img')
-      const span = document.createElement('span')
+  projects.forEach(item => {
+    const element = document.createElement('div')
+    const img = document.createElement('img')
+    const span = document.createElement('span')
 
-      img.src = '556a331802d10e8452d9.png'
+    img.src = '556a331802d10e8452d9.png'
 
-      element.classList.add('projects')
+    element.classList.add('projects')
 
-      element.id = item.id;
-      span.textContent = item.name
+    element.id = item.id;
+    span.textContent = item.name
 
 
-      element.appendChild(img)
-      element.appendChild(span)
-      projectsLists.appendChild(element)
-    })
+    element.appendChild(img)
+    element.appendChild(span)
+    projectsLists.appendChild(element)
+  })
 
-  console.log(arr)
 }
