@@ -31,7 +31,7 @@ export default class CreateTodo {
   }
 
   store() {
-    localStorage.setItem('project', JSON.stringify(this));
+    localStorage.setItem('project', JSON.stringify({storageDb: this.storageDb}));
   }
 }
 

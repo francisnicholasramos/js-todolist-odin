@@ -5,6 +5,6 @@ openForm();
 addNewProject();
 listAllProjects();
 renderProjects()
-const inputData = getTheInputs();
-addNewTask(inputData);
+getTheInputs();
+addNewTask();
 

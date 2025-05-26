@@ -13,7 +13,7 @@ export function renderProjects() {
 
       projectbar.style.display = 'block';
       h2.style.display = 'block';
-      // todos.style.display = 'flex'
+      todos.style.display = 'flex'
       addTodo.style.display = 'block';
 
       const uniqueID = project.id; // get the id 
@@ -43,11 +43,10 @@ export function openForm() {
 export function addNewProject() {
   const form = document.querySelector("form");
 
-  const storage = CreateTodo.init();
-
   form.addEventListener('submit', (e) => {
     e.preventDefault(); // prevents form from reloading after submission
 
+    const storage = CreateTodo.init();
     const inputTodo = document.querySelector('.addInput').value
 
     storage.addTodoList(new Project(inputTodo))
@@ -55,6 +54,7 @@ export function addNewProject() {
 
     listAllProjects(); // re-render the dom for new added array
     form.reset(); // empty form for new entry
+    location.reload() // reloads the page
   })
 }
 
@@ -65,7 +65,7 @@ export function getTheInputs() {
   const option = document.querySelector('#option').value
 
 
-  const activeProject = document.querySelector('.projects');
+  const activeProject = document.querySelector('.projects.active');
   const uid = activeProject ? activeProject.id : null;
 
   return {
@@ -77,8 +77,7 @@ export function getTheInputs() {
 }
 
 // addNewTask
-export function addNewTask(value) {
-  const newTodo = new Todo(value.task, value.date, value.option)
+export function addNewTask() {
 
   const newTaskForm = document.querySelector('.taskForm')
   const addBtn = document.querySelector('.addTodo')
@@ -95,6 +94,9 @@ export function addNewTask(value) {
   })
 
   newTaskForm.addEventListener('submit', () => {
+
+    const value = getTheInputs();
+    const newTodo = new Todo(value.task, value.date, value.option)
     const savedWrapper = JSON.parse(localStorage.getItem('project'));
     const savedProjects = savedWrapper?.storageDb || [];
 
@@ -104,6 +106,8 @@ export function addNewTask(value) {
       targetProject.todos.push(newTodo);
       localStorage.setItem('project', JSON.stringify({storageDb: savedProjects}));
     }
+
+    location.reload()
   })
 
 }
@@ -128,10 +132,19 @@ export function listAllProjects() {
     element.id = item.id;
     span.textContent = item.name
 
+    element.addEventListener('click', () => {
+      document.querySelectorAll('.projects').forEach(p => p.classList.remove('active'));
+      element.classList.add('active');
+    });
+
 
     element.appendChild(img)
     element.appendChild(span)
     projectsLists.appendChild(element)
   })
 
+}
+
+if (test) {
+	
 }
