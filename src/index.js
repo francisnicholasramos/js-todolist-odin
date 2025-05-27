@@ -1,4 +1,4 @@
-import { openForm, addNewProject, listAllProjects, renderProjects, addNewTask, getTheInputs} from "./dom";
+import { openForm, addNewProject, listAllProjects, renderProjects, addNewTask, getTheInputs, listAllTasks} from "./dom";
 import './css/styles.css'
 
 openForm();
@@ -7,4 +7,4 @@ listAllProjects();
 renderProjects()
 getTheInputs();
 addNewTask();
-
+listAllTasks();

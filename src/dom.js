@@ -4,27 +4,37 @@ import CreateTodo from "./core";
 
 export function renderProjects() {
   document.querySelectorAll('.projects').forEach(project => {
-    const projectbar = document.querySelector('.projectbar')
-    const h2 = document.querySelector('.titleName')
-    const todos = document.querySelector('.todos')
-    const addTodo = document.querySelector('.addTodo')
+    const content = document.querySelector('.content');
+    const projectbar = document.querySelector('.projectbar');
+    const h2 = document.querySelector('.titleName');
+    const addTodo = document.querySelector('.addTodo');
+
     project.addEventListener('click', () => {
       const retrieveProjects = CreateTodo.init().storageDb;
+      const uniqueID = project.id;
+      const currentProject = retrieveProjects.find(p => p.id === uniqueID);
 
+      if (!currentProject) return;
+
+      const existing = content.querySelector('.todos');
+      if (existing) existing.remove();
+
+      const list = document.createElement('div');
+      list.classList.add('todos');
+      list.style.display = 'block';
+
+      listAllTasks(currentProject, list);
+
+      h2.textContent = currentProject.name;
       projectbar.style.display = 'block';
       h2.style.display = 'block';
-      todos.style.display = 'flex'
       addTodo.style.display = 'block';
 
-      const uniqueID = project.id; // get the id 
-      const currentProject = retrieveProjects.find(p => p.id === uniqueID)
-
-      if (currentProject) {
-        h2.textContent = currentProject.name
-      }
-    })
-  })
+      content.appendChild(list);
+    });
+  });
 }
+
 
 // openForm
 export function openForm() {
@@ -81,16 +91,11 @@ export function addNewTask() {
 
   const newTaskForm = document.querySelector('.taskForm')
   const addBtn = document.querySelector('.addTodo')
-  const cancelBtn = document.querySelector('.cancel')
 
   addBtn.addEventListener('click', () => {
     const hideForm = newTaskForm.style.display === 'none'
-    newTaskForm.style.display = hideForm ? 'flex' : 'none';
-  })
+    newTaskForm.style.display = hideForm ? 'flex' : 'none';    
 
-  cancelBtn.addEventListener('click', () => {
-    const hideForm = newTaskForm.style.display === 'none'
-    newTaskForm.style.display = hideForm ? 'flex' : 'none';
   })
 
   newTaskForm.addEventListener('submit', () => {
@@ -101,10 +106,10 @@ export function addNewTask() {
     const savedProjects = savedWrapper?.storageDb || [];
 
     const targetProject = savedProjects.find(p => p.id === value.uid);
-    
+
     if (targetProject) {
       targetProject.todos.push(newTodo);
-      localStorage.setItem('project', JSON.stringify({storageDb: savedProjects}));
+      localStorage.setItem('project', JSON.stringify({ storageDb: savedProjects }));
     }
 
     location.reload()
@@ -145,6 +150,56 @@ export function listAllProjects() {
 
 }
 
-if (test) {
-	
+export function listAllTasks(project, container) {
+  const saveProjects = (updatedProject) => {
+    const allProjects = CreateTodo.init().storageDb;
+    const updatedProjects = allProjects.map(p =>
+      p.id === updatedProject.id ? updatedProject : null
+    );
+    localStorage.setItem('project', JSON.stringify(updatedProjects)); 
+  };
+
+  project.todos.forEach(todo => {
+    const containerDiv = document.createElement('div');
+    containerDiv.classList.add('todoContainer');
+
+    const div1 = document.createElement('div');
+    const div2 = document.createElement('div');
+    const checkbox = document.createElement('input');
+    const span = document.createElement('span');
+    const date = document.createElement('input');
+    const del = document.createElement('button');
+
+    div1.classList.add('div1');
+    div2.classList.add('div2');
+    checkbox.type = 'checkbox';
+    checkbox.classList.add('checkbox');
+    checkbox.checked = todo.status
+    span.classList.add('taskName');
+    span.textContent = todo.task;
+    date.type = 'date';
+    date.value = todo.dueDate || '';
+    del.innerHTML = `&#x2716`;
+    del.classList.add('del');
+
+    checkbox.addEventListener('change', () => {
+      todo.status = checkbox.checked
+      saveProjects(project)
+    })
+
+    div1.appendChild(checkbox);
+    div1.appendChild(span);
+    div2.appendChild(date);
+    div2.appendChild(del);
+    containerDiv.appendChild(div1);
+    containerDiv.appendChild(div2);
+
+    container.appendChild(containerDiv);
+  });
 }
+
+
+
+
+
+
